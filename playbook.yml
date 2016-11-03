@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  sudo: true
+  remote_user: douglas
+  vars:
+    project: logger
+    ip_address: "192.168.1.{% if environment_tier=='development' %}89{% elif environment_tier=='production' %}14{% endif %}"
+  roles:
+    - role: stevenharradine.static-ip
+      static_ip_address: "{{ ip_address }}"
+    - role: stevenharradine.hostname
+    - role: stevenharradine.rsyslog
+      rsyslog_isserver: yes
